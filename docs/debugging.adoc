@@ -1,0 +1,101 @@
+= Debugging Guide: C ToDo App
+
+This document explains how to set up and use a debugging environment for the `todo-app` project using `lldb` (recommended for macOS) or `gdb`.
+
+== 🔧 Step 1: Enable Debug Symbols
+
+Edit the `Makefile` to include the `-g` flag:
+
+[source,makefile]
+----
+CFLAGS = -Wall -Wextra -Werror -std=c11 -g -Iinclude -lncurses
+----
+
+Then recompile:
+
+[source,shell]
+----
+make clean
+make
+----
+
+== 🧠 Step 2: Debug Using LLDB (Recommended for macOS)
+
+Launch the debugger:
+
+[source,shell]
+----
+lldb ./todo
+----
+
+Set a breakpoint at `main`:
+
+[source,shell]
+----
+(lldb) breakpoint set --name main
+----
+
+Start the program:
+
+[source,shell]
+----
+(lldb) run
+----
+
+Step through the code:
+
+[source,shell]
+----
+(lldb) next     // Step over
+(lldb) step     // Step into
+(lldb) continue // Continue execution
+----
+
+Exit debugger:
+
+[source,shell]
+----
+(lldb) quit
+----
+
+== 🛠️ Step 3: (Alternative) Use GDB
+
+Install `gdb` using Homebrew:
+
+[source,shell]
+----
+brew install gdb
+----
+
+NOTE: On macOS, you must manually codesign `gdb`:
+See https://sourceware.org/gdb/wiki/BuildingOnDarwin
+
+== 💻 Step 4: Optional — Debug with Visual Studio Code
+
+. Install the 'CodeLLDB' extension.
+. Create a `.vscode/launch.json` file with the following content:
+
+[source,json]
+----
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug ToDo App",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/todo",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": true
+    }
+  ]
+}
+----
+
+. Press `F5` to start debugging.
+
+== 📝 Tips
+
+- Use `printw("value: %d", x); refresh();` to output values during execution.
+- Breakpoints around user input/menu logic are useful for inspecting control flow.
