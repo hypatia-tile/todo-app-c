@@ -1,0 +1,16 @@
+ 1154  clang main.c -lncurses
+ 1155  ./a.out
+ 1156  git init
+ 1157  git status
+ 1158  touch .gitignore
+ 1159  ls
+ 1160  git status
+ 1161  mkdir -p src include
+ 1162  ls
+ 1163  touch src/main.c
+ 1164  cat main.c > src/main.c
+ 1165  rm main.c
+ 1166  ls
+ 1167  touch include/todo.h Makefile
+ 1168  ls
+ 1169  make

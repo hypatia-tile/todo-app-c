@@ -1,0 +1,63 @@
+= todo application
+
+In this project, I will create a simple todo application using the following technologies:
+
+* Language: C
+* Language features: C17
+* Libraries: ncurses, sqlite3
+* Build system: Makefile
+* Version control: Git
+* Documentation: Doxygen
+* Testing: CUnit
+* Code style: GNU coding standards
+* Code quality: cppcheck, clang-tidy
+
+== Purpose
+
+The purpose of this project is to study the C programming language and its features,
+as well as to learn how to use various libraries and tools in a C project.
+The todo application will allow users to create, read, update, and delete todo items.
+
+== Features
+
+* Add todo items
+* View todo items
+* Update todo items
+* Delete todo items
+* Mark todo items as completed
+* Save todo items to a SQLite database
+* Load todo items from a SQLite database
+* Use ncurses for a text-based user interface
+* Use CUnit for unit testing
+* Use Doxygen for documentation
+* Use cppcheck and clang-tidy for code quality checks
+
+== Requirements
+
+* C compiler (gcc or clang)
+* ncurses library
+* sqlite3 library
+* CUnit library
+* Doxygen
+* cppcheck
+* clang-tidy
+* Make utility
+* Git
+* A terminal emulator that supports ncurses
+* A text editor or IDE for C development (optional)
+
+== Environment
+
+My development environment consists of:
+
+* Operating System: macOS
+
+
+== Installation
+
+To install the required libraries and tools, you can use your package manager.
+I use Homebrew on macOS, so the commands are as follows:
+[source, zsh]
+----
+brew install ncurses sqlite3 cunit doxygen cppcheck llvm
+----
