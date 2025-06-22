@@ -2,3 +2,4 @@ a.out
 tasks.txt
 .vscode/
 dist/
+cppcheck_report.txt
