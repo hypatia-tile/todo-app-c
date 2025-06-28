@@ -2,3 +2,6 @@ a.out
 tasks.txt
 .vscode/
 dist/
+docs/latex/
+docs/html/
+cppcheck_report.txt

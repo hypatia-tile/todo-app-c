@@ -8,6 +8,11 @@ void handle_view(char tasks[][MAX_TASK_LEN], int count);
 void handle_add(char tasks[][MAX_TASK_LEN], int *count);
 void handle_delete(char tasks[][MAX_TASK_LEN], int *count);
 
+/**
+ * @brief Initialize the main UI and welcome message.A_ALTCHARSET
+ *
+ * Starts the ncurses screen and displays a main menu
+ */
 int main()
 {
     char tasks[MAX_TASKS][MAX_TASK_LEN];
