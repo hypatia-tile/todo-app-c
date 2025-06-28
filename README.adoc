@@ -61,3 +61,10 @@ I use Homebrew on macOS, so the commands are as follows:
 ----
 brew install ncurses sqlite3 cunit doxygen cppcheck llvm
 ----
+
+== License and Third-Party Libraries
+
+This project uses the ncurses library for the text-based user interface.
+
+ncurses is licensed under an MIT-style license. For more information, see:
+https://invisible-island.net/ncurses/ncurses-license.html

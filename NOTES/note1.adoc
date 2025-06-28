@@ -1,0 +1,110 @@
+= Getting started with Doxygen
+
+Doxygen helps create clean, structured documentation for projects.
+
+== ✅Prerequisites 
+
+=== Install Doxygen
+
+On macOS with Homebrew
+
+[source,zsh]
+----
+brew install doxygen
+----
+
+Check installation:
+
+[source,zsh]
+----
+doxygen --version
+----
+
+== ✅ Add Doxygen to the Project
+
+=== Step 1: Generate a Default Doxyfile
+
+Run this from the root of the project:
+
+[source,zsh]
+----
+doxygen -g
+----
+
+This  creates  a `Doxyfile` with default settings.
+
+=== Step 2: Configure Doxygen Settings
+
+Open the generated `Doxyfile` in an editor and set the following:
+
+[source,text]
+----
+PROJECT_NAME          = "C <Application-name>"
+OUTPUT_DIRECTORY      = docs
+INPUT                 = src include
+FILE_PATTERNS         = *.c *h
+RECURSIVE             = YES
+EXTRACT_ALL           = YES
+GENERATE_LATEX.       = NO
+----
+
+Optional:
+
+[source,text]
+----
+GENERATE_TREEVIEW      = YES
+FULL_PATH_NAMES        = NO
+GENERATE_TREEVIEW      = YES
+----
+
+=== Step 3: Add Comments in Code
+
+Add Doxygen-style comments like this:
+
+[source,c]
+----
+/**
+ * @brief Initialize the main UI and welcome message.
+ *
+ * Starts the ncurses screen and displays a greeting to the user.
+ */
+int main()
+{
+    ...
+}
+----
+
+Use `@param`, `@return`, etc. for functions with parameters.
+
+=== Step 4: Generate Documentation
+
+[source,zsh]
+----
+doxygen Doxyfile
+----
+
+The HTML docs will be in `docs/html/index.html`.
+
+Open in browser:
+
+[source,zsh]
+----
+open docs/html/index.html
+----
+
+=== Step 5: (Optional) Add a Makefile Target
+
+Add this to your `Makefile`:
+
+[source,makefile]
+----
+doc:
+	doxygen Doxyfile
+----
+
+Then simply run:
+
+[source,zsh]
+----
+make doc
+----
