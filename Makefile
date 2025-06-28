@@ -14,6 +14,8 @@ all:
 run: all
 	./$(out)
 
+doc:
+	doxygen Doxyfile
 clean:
 	rm -f $(out)
 
