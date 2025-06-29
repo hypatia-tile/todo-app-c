@@ -1,5 +1,6 @@
 a.out
 tasks.txt
+todo.db
 .vscode/
 dist/
 docs/latex/
