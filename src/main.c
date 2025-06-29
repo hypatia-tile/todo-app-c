@@ -40,7 +40,8 @@ int main()
             save_tasks(tasks, task_count);
             ui_cleanup(); /* End of UI mode */
             return 0;     /* Exit the program */
-        default:
+
+          default:
             break;
         }
     }
