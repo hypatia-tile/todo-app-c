@@ -1,7 +1,7 @@
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -std=c17 -g -Iinclude
 LDFLAGS = -lncurses
-SRC = src/main.c src/task.c
+SRC = src/main.c src/task.c src/ui.c src/menu.c
 DIST = dist
 out = $(DIST)/todo
 CPPCHECKFLAGS = --enable=all --inconclusive --std=c17 --language=c --force
