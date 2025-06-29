@@ -118,6 +118,91 @@ int main()
   SRC = src/main.c src/task.c src/ui.c src/menu.c
   ```
 
+## SQLite Database Implementation
+
+**Date**: June 29, 2025  
+**Enhancement**: Replaced file-based storage with SQLite database
+
+### New Database Module
+
+**New Files:**
+- `include/database.h` - Database interface definitions
+- `src/database.c` - SQLite implementation
+- `migrate.sh` - Migration script for existing data
+
+**Database Schema:**
+```sql
+CREATE TABLE tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    text TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+**Functions Added:**
+- `db_init()` - Initialize database and create schema
+- `db_cleanup()` - Close database connection
+- `db_load_tasks()` - Load all tasks from database
+- `db_save_tasks()` - Save all tasks to database (with transaction)
+- `db_add_task()` - Add single task to database
+- `db_delete_task_by_index()` - Delete task by index
+- `db_get_task_count()` - Get number of tasks
+
+**Benefits of SQLite Integration:**
+- ✅ **ACID Transactions** - Data integrity guaranteed
+- ✅ **Concurrent Access** - Multiple instances can read safely
+- ✅ **Better Performance** - Indexed queries and optimized storage
+- ✅ **Data Validation** - Schema enforces data types
+- ✅ **Backup/Restore** - Single file database easy to backup
+- ✅ **Future Extensions** - Ready for complex queries and relationships
+
+**Storage Format:**
+- **Before**: Plain text file (`tasks.txt`)
+- **After**: SQLite database (`todo.db`)
+
+**Migration Support:**
+- Automatic database creation on first run
+- Migration script available (`./migrate.sh`)
+- Backward compatibility maintained in API
+
+**Build Dependencies Updated:**
+- Added `-lsqlite3` to linker flags
+- Updated source file list to include `database.c`
+
+### Module Integration
+
+The database module integrates seamlessly with the existing modular architecture:
+
+```
+main.c
+├── todo.h (task operations)
+├── ui.h (user interface)
+├── menu.h (menu system)
+└── database.h (data persistence) [NEW]
+
+task.c
+├── ui.h (display functions)
+└── database.h (data operations) [NEW]
+
+database.c
+├── sqlite3.h (SQLite library)
+└── ui.h (error reporting)
+```
+
+**Error Handling:**
+- Database connection failures handled gracefully
+- SQLite errors reported through UI module
+- Transaction rollback on failures
+- Fallback behavior for initialization errors
+
+**Performance Features:**
+- Prepared statements for security and performance
+- Transaction batching for bulk operations
+- Connection reuse throughout application lifecycle
+- Efficient indexing on primary key
+
+This enhancement maintains the clean modular architecture while significantly improving data persistence capabilities.
+
 ## New Modular Architecture
 
 ### Module Responsibilities
@@ -128,6 +213,7 @@ int main()
 | **Task** | Data management & persistence | `load_tasks()`, `save_tasks()`, `add_task()`, `delete_task()`, `view_tasks()` | ui.h |
 | **UI** | User interface abstraction | `ui_init()`, `ui_cleanup()`, `ui_print()`, `ui_get_string()` | ncurses |
 | **Menu** | User interaction flows | `menu_show()`, `menu_handle_*()` | ui.h, todo.h |
+| **Database** | Data persistence using SQLite | `db_init()`, `db_cleanup()`, `db_load_tasks()`, `db_save_tasks()`, `db_add_task()`, `db_delete_task_by_index()`, `db_get_task_count()` | sqlite3.h |
 
 ### Dependency Graph
 ```
@@ -145,6 +231,9 @@ task.c
 
 ui.c
 └── ncurses (external library)
+
+database.c
+└── sqlite3.h (SQLite library)
 ```
 
 ## Benefits Achieved
@@ -180,13 +269,15 @@ ui.c
 include/
 ├── todo.h      # Task management interface
 ├── ui.h        # User interface interface (NEW)
-└── menu.h      # Menu system interface (NEW)
+├── menu.h      # Menu system interface (NEW)
+└── database.h   # Database interface (NEW)
 
 src/
 ├── main.c      # Simplified application entry point
 ├── task.c      # Updated task management
 ├── ui.c        # User interface implementation (NEW)
-└── menu.c      # Menu system implementation (NEW)
+├── menu.c      # Menu system implementation (NEW)
+└── database.c   # Database module implementation (NEW)
 
 work-summary/   # Work documentation (NEW)
 └── refactoring-summary.md

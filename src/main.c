@@ -1,6 +1,7 @@
 #include "todo.h"
 #include "ui.h"
 #include "menu.h"
+#include "database.h"
 
 /**
  * @brief Initialize the main UI and welcome message
@@ -13,7 +14,14 @@ int main()
     int task_count = 0;
 
     ui_init();                      /* Start UI */
-    load_tasks(tasks, &task_count); /* Load tasks from file */
+    
+    if (db_init() != 0) {
+        ui_cleanup();
+        ui_print("Failed to initialize database. Exiting.\n");
+        return 1;
+    }
+    
+    load_tasks(tasks, &task_count); /* Load tasks from database */
 
     int choice;
     while (1)
@@ -38,6 +46,7 @@ int main()
             break;
         case '4':
             save_tasks(tasks, task_count);
+            db_cleanup(); /* Close database connection */
             ui_cleanup(); /* End of UI mode */
             return 0;     /* Exit the program */
 
@@ -45,6 +54,7 @@ int main()
             break;
         }
     }
+    db_cleanup();
     ui_cleanup();
     return 0;
 }

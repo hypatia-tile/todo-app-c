@@ -3,27 +3,21 @@
 #include <string.h>
 #include "todo.h"
 #include "ui.h"
+#include "database.h"
 
 void load_tasks(char tasks[][MAX_TASK_LEN], int *count)
 {
-    FILE *f = fopen("tasks.txt", "r");
-    *count = 0;
-    if (!f)
-        return;
-    while (fgets(tasks[*count], MAX_TASK_LEN, f))
-    {
-        tasks[*count][strcspn(tasks[*count], "\n")] = 0; // trim newline
-        (*count)++;
+    if (db_load_tasks(tasks, count) != 0) {
+        ui_print("Error loading tasks from database.\n");
+        *count = 0;
     }
-    fclose(f);
 }
 
 void save_tasks(char tasks[][MAX_TASK_LEN], int count)
 {
-    FILE *f = fopen("tasks.txt", "w");
-    for (int i = 0; i < count; i++)
-        fprintf(f, "%s\n", tasks[i]);
-    fclose(f);
+    if (db_save_tasks(tasks, count) != 0) {
+        ui_print("Error saving tasks to database.\n");
+    }
 }
 
 void add_task(char tasks[][MAX_TASK_LEN], int *count, const char *task)

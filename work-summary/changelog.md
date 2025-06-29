@@ -83,3 +83,76 @@ include/
 - File format remains the same (tasks.txt)
 - User interface behavior unchanged
 - Build process updated but compatible with existing environment
+
+## [1.2.0] - 2025-06-29 (SQLite Implementation)
+
+### Added
+- **Database Module** (`src/database.c`, `include/database.h`)
+  - `db_init()` - Initialize SQLite database and create schema
+  - `db_cleanup()` - Close database connection properly
+  - `db_load_tasks()` - Load tasks from SQLite database
+  - `db_save_tasks()` - Save tasks with transaction support
+  - `db_add_task()` - Add individual task to database
+  - `db_delete_task_by_index()` - Delete task by position
+  - `db_get_task_count()` - Get total number of tasks
+
+- **Migration Support**
+  - `migrate.sh` - Script to migrate from tasks.txt to SQLite
+  - Automatic database creation on first run
+  - Backup creation during migration
+
+- **Database Schema**
+  ```sql
+  CREATE TABLE tasks (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      text TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+  ```
+
+### Changed
+- **Storage Backend**
+  - Replaced file I/O with SQLite database operations
+  - Maintained existing API compatibility
+  - Enhanced error handling and reporting
+
+- **Task Module** (`src/task.c`)
+  - Updated `load_tasks()` to use `db_load_tasks()`
+  - Updated `save_tasks()` to use `db_save_tasks()`
+  - Added database error handling
+
+- **Main Application** (`src/main.c`)
+  - Added database initialization in startup sequence
+  - Added proper database cleanup on exit
+  - Enhanced error handling for database failures
+
+- **Build System** (`Makefile`)
+  - Added SQLite3 library linking (`-lsqlite3`)
+  - Added `database.c` to source file list
+  - Updated dependencies
+
+### Technical Improvements
+- **ACID Transactions**: All database operations now have transaction support
+- **Data Integrity**: Schema validation and constraint enforcement
+- **Performance**: Prepared statements and efficient queries
+- **Concurrency**: Safe multi-instance access (read operations)
+- **Error Recovery**: Graceful handling of database errors
+- **Memory Safety**: Proper resource cleanup and null checking
+
+### Database Features
+- **Automatic Schema Creation**: Database and tables created on first run
+- **Transaction Support**: Bulk operations wrapped in transactions
+- **Prepared Statements**: Protection against SQL injection
+- **Connection Management**: Proper initialization and cleanup
+- **Error Reporting**: Database errors reported through UI module
+
+### Migration Path
+- Old format: `tasks.txt` (plain text)
+- New format: `todo.db` (SQLite database)
+- Migration tool: `./migrate.sh`
+- Backward compatibility: API unchanged
+
+### Dependencies
+- **New External Dependency**: SQLite3 development libraries
+- **Runtime Requirement**: SQLite3 shared library
+- **Platform Support**: Available on macOS, Linux, Windows
