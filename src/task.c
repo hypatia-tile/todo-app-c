@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ncurses.h>
 #include "todo.h"
+#include "ui.h"
 
 void load_tasks(char tasks[][MAX_TASK_LEN], int *count)
 {
@@ -46,5 +46,5 @@ void delete_task(char tasks[][MAX_TASK_LEN], int *count, int index)
 void view_tasks(char tasks[][MAX_TASK_LEN], int count)
 {
     for (int i = 0; i < count; ++i)
-        printw("%d. %s\n", i + 1, tasks[i]);
+        ui_print("%d. %s\n", i + 1, tasks[i]);
 }
