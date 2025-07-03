@@ -1,9 +1,9 @@
+#include "database.h"
+#include "todo.h"
+#include "ui.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "todo.h"
-#include "ui.h"
-#include "database.h"
 
 void load_tasks(char tasks[][MAX_TASK_LEN], int *count)
 {

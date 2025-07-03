@@ -1,7 +1,7 @@
-#include <stdlib.h>
 #include "menu.h"
-#include "ui.h"
 #include "todo.h"
+#include "ui.h"
+#include <stdlib.h>
 
 void menu_show(void)
 {
@@ -16,12 +16,9 @@ void menu_show(void)
 void menu_handle_view(char tasks[][MAX_TASK_LEN], int count)
 {
     ui_print("=== Your Tasks ===\n");
-    if (count == 0)
-    {
+    if (count == 0) {
         ui_print("No tasks available.\n");
-    }
-    else
-    {
+    } else {
         view_tasks(tasks, count);
     }
     ui_wait_for_key();
@@ -43,13 +40,10 @@ void menu_handle_delete(char tasks[][MAX_TASK_LEN], int *count)
     ui_print("Enter task number to delete: ");
     ui_get_string(input, 10);
     int index = atoi(input) - 1; // Convert to zero-based index
-    if (index >= 0 && index < *count)
-    {
+    if (index >= 0 && index < *count) {
         delete_task(tasks, count, index);
         ui_print("Task deleted!\n");
-    }
-    else
-    {
+    } else {
         ui_print("Invalid index.\n");
     }
     ui_wait_for_key();
