@@ -22,5 +22,7 @@ clean:
 check:
 	cppcheck $(CPPCHECKFLAGS) src include 2> $(REPORT)
 
+format:
+	./format.sh
 
-.PHONY: all run clean check
+.PHONY: all run clean check format
