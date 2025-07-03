@@ -157,7 +157,11 @@ include/
 - **Runtime Requirement**: SQLite3 shared library
 - **Platform Support**: Available on macOS, Linux, Windows
 
-## [1.3.0] - 2025-07-03 (K&R Style Formatting)
+## [1.3.0] - 2025-07-03 (K&R Style Formatting) ✅ MERGED
+
+**Pull Request**: #8 - Successfully merged into `dev` branch  
+**Merge Commit**: `1d0f6f9`  
+**Status**: ✅ Production Ready
 
 ### Added
 - **K&R Formatting Infrastructure**
